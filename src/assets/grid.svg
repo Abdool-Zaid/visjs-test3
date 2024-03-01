@@ -1,0 +1,9 @@
+<!-- <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="10" r="2" fill="rgb(112,118,118)" />
+  </svg> -->
+
+  <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="10" cy="10" r="2" fill="rgb(112,118,118)">
+    <animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

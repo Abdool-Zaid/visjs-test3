@@ -1,6 +1,7 @@
 <main class="main" id="bg">
   <form>
     <input type="text" name="name" id="node_name" placeholder="name" /><br />
+    <hr />
     <input type="radio" id="circle" name="shape" value="circle" checked />
     <label for="circle">circle</label><br />
     <input type="radio" id="diamond" name="shape" value="diamond" />
@@ -8,11 +9,20 @@
     <input type="radio" id="square" name="shape" value="square" />
     <label for="square">square</label><br />
     <hr />
-
+    <p>connector</p>
     <input type="radio" id="arrow" name="connector" value="arrow" />
     <label for="arrow">arrow</label><br />
     <input type="radio" id="line" name="connector" value="line" checked />
     <label for="line">line</label><br />
+    <hr />
+    <p>colour</p>
+    <input type="radio" id="red" name="colour" value="red" />
+    <label for="red">red</label><br />
+    <input type="radio" id="green" name="colour" value="green" checked />
+    <label for="green">green</label><br />
+    <input type="radio" id="blue" name="colour" value="blue" />
+    <label for="blue">blue</label><br />
+
     <button (click)="add_node($event)">run</button>
   </form>
   <div #visualizationContainer id="main"></div>

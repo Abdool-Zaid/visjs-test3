@@ -110,6 +110,7 @@ export class AppComponent implements AfterViewInit {
     nodeId: string,
     shape: string,
     label: string,
+    colour: string,
     edgeType: string
   ): void {
     this.showModal = true;
@@ -117,12 +118,18 @@ export class AppComponent implements AfterViewInit {
     const selectedNode = Number(nodeId);
 
     const newNodeId = this.nodes.length + 1;
-    this.nodes.push({ id: newNodeId, shape: shape, label: label });
+    this.nodes.push({
+      id: newNodeId,
+      shape: shape,
+      label: label,
+      opacity: 0,
+      color: colour,
+    });
 
     if (edgeType == 'arrow') {
-      const newEdge: Edge = { from: selectedNode, to: newNodeId, arrows:'to' };
+      const newEdge: Edge = { from: selectedNode, to: newNodeId, arrows: 'to' };
       this.edges.push(newEdge);
-    }else{
+    } else {
       const newEdge: Edge = { from: selectedNode, to: newNodeId };
       this.edges.push(newEdge);
     }
@@ -141,13 +148,16 @@ export class AppComponent implements AfterViewInit {
       'input[name="connector"]:checked'
     ) as HTMLInputElement;
     const edgeType = edgeTypeInput.value;
+    const colourInput = document.querySelector(
+      'input[name="colour"]:checked'
+    ) as HTMLInputElement;
+    const colour = colourInput.value;
 
-    console.log(edgeType);
     const nodeName = nodeNameInput.value;
     const selectedShape = selectedShapeInput ? selectedShapeInput.value : '';
 
     const parent = `${this.selectedNode}`;
 
-    this.onNodeClick(parent, selectedShape, nodeName, edgeType);
+    this.onNodeClick(parent, selectedShape, nodeName, colour, edgeType);
   }
 }

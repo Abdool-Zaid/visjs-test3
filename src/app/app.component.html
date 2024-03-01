@@ -1,6 +1,7 @@
 <main class="main" id="bg">
   <form>
-    <input type="text" name="name" id="node_name" placeholder="name" /><br />
+    <input type="text" name="name" id="node_name" placeholder="name" />
+    <p>selected: {{this.selectedNode}}</p><br />
     <hr />
     <input type="radio" id="circle" name="shape" value="circle" checked />
     <label for="circle">circle</label><br />
@@ -24,6 +25,8 @@
     <label for="blue">blue</label><br />
 
     <button (click)="add_node($event)">add</button>
+    <button (click)="update_node($event)">update</button>
+    <button (click)="delete_node($event)">delete</button>
   </form>
   <div #visualizationContainer id="main"></div>
 </main>

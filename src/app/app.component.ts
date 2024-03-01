@@ -160,4 +160,38 @@ export class AppComponent implements AfterViewInit {
 
     this.onNodeClick(parent, selectedShape, nodeName, colour, edgeType);
   }
+  update_node(event: Event) {
+    event.preventDefault();
+
+    const nodeNameInput = document.getElementById(
+      'node_name'
+    ) as HTMLInputElement;
+    const selectedShapeInput = document.querySelector(
+      'input[name="shape"]:checked'
+    ) as HTMLInputElement;
+    const colourInput = document.querySelector(
+      'input[name="colour"]:checked'
+    ) as HTMLInputElement;
+
+    const colour = colourInput.value;
+    const nodeName = nodeNameInput.value;
+    const selectedShape = selectedShapeInput ? selectedShapeInput.value : '';
+
+    this.nodes= this.nodes.map(node=>{
+      if(node.id=== this.selectedNode){
+      return {...node , color:colour, label:nodeName, shape:selectedShape}
+      }
+      return node
+    });
+    this.update_network();
+  }
+  delete_node(event: Event) {
+    event.preventDefault();
+
+    this.nodes = this.nodes.filter((node) => node.id !== this.selectedNode);
+    this.edges = this.edges.filter(
+      (node) => node.to !== this.selectedNode || node.from !== this.selectedNode
+    );
+    this.update_network();
+  }
 }

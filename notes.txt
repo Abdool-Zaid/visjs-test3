@@ -1,0 +1,4 @@
+for boards inside of a board 
+    - have the parent board show a node with a bg img of the board
+    - the bg img should reference to the the child board 
+    - parent node onclick open modal to edit child board

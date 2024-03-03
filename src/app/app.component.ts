@@ -22,7 +22,14 @@ export class AppComponent implements AfterViewInit {
   showModal: boolean = false;
   selectedNode: Number = 1;
   network!: Network;
-  nodes: Node[] = [{ id: 1, label: 'Node 1' }];
+  nodes: Node[] = [
+    {
+      id: 1,
+      label: 'Node 1',
+      shape: 'circularImage',
+      image: 'https://picsum.photos/200/300',
+    },
+  ];
 
   edges: Edge[] = [];
 
@@ -51,7 +58,7 @@ export class AppComponent implements AfterViewInit {
       if (params.nodes.length > 0) {
         const nodeId = params.nodes[0];
         this.selectedNode = nodeId;
-        // this.onNodeClick(nodeId);
+        console.log(params)
       }
     });
     this.network.on('dragEnd', (params) => {
@@ -177,11 +184,16 @@ export class AppComponent implements AfterViewInit {
     const nodeName = nodeNameInput.value;
     const selectedShape = selectedShapeInput ? selectedShapeInput.value : '';
 
-    this.nodes= this.nodes.map(node=>{
-      if(node.id=== this.selectedNode){
-      return {...node , color:colour, label:nodeName, shape:selectedShape}
+    this.nodes = this.nodes.map((node) => {
+      if (node.id === this.selectedNode) {
+        return {
+          ...node,
+          color: colour,
+          label: nodeName,
+          shape: selectedShape,
+        };
       }
-      return node
+      return node;
     });
     this.update_network();
   }

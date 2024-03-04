@@ -3,10 +3,10 @@ import {
   Component,
   ElementRef,
   ViewChild,
-  ChangeDetectorRef,
+  Renderer2,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Network, Node, Edge } from 'vis-network';
+import { Network, Node, Edge, Image } from 'vis-network';
 
 @Component({
   selector: 'app-root',
@@ -18,22 +18,45 @@ import { Network, Node, Edge } from 'vis-network';
 export class AppComponent implements AfterViewInit {
   title = 'visJS-test1';
   @ViewChild('visualizationContainer') visualizationContainer!: ElementRef;
-
+  @ViewChild('buildIMG') buildIMG!: ElementRef;
+  constructor(private renderer: Renderer2) {}
   showModal: boolean = false;
   selectedNode: Number = 1;
+
   network!: Network;
   nodes: Node[] = [
     {
       id: 1,
       label: 'Node 1',
-      shape: 'circularImage',
+      shape: 'image',
       image: 'https://picsum.photos/200/300',
+    },
+    {
+      id: 2,
+      label: 'mirror',
+      shape: 'image',
+      image: '',
     },
   ];
 
   edges: Edge[] = [];
 
   ngAfterViewInit(): void {
+    const canvasElement = this.buildIMG.nativeElement as HTMLCanvasElement;
+
+    // Get the 2D rendering context
+    const ctx = canvasElement.getContext('2d');
+    if (ctx) {
+      // Set background color
+      ctx.fillStyle = 'green';
+      ctx.fillRect(0, 0, canvasElement.width, canvasElement.height);
+
+      // Draw something (e.g., a rectangle)
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(50, 50, 100, 100);
+      this.nodes[0].image = this.toIMG(canvasElement);
+    }
+
     let data = {
       nodes: this.nodes,
       edges: this.edges,
@@ -45,6 +68,20 @@ export class AppComponent implements AfterViewInit {
       width: '100%',
       clickToUse: true,
       physics: false, // Disable physics
+      nodes: {
+        borderWidth: 4,
+        size: 30,
+        color: {
+          border: '#406897',
+          background: '#6AAFFF',
+        },
+        shapeProperties: {
+          useBorderWithImage: true,
+        },
+      },
+      edges: {
+        color: 'lightgray',
+      },
     };
 
     this.network = new Network(
@@ -58,7 +95,7 @@ export class AppComponent implements AfterViewInit {
       if (params.nodes.length > 0) {
         const nodeId = params.nodes[0];
         this.selectedNode = nodeId;
-        console.log(params)
+        console.log(params);
       }
     });
     this.network.on('dragEnd', (params) => {
@@ -204,6 +241,18 @@ export class AppComponent implements AfterViewInit {
     this.edges = this.edges.filter(
       (node) => node.to !== this.selectedNode || node.from !== this.selectedNode
     );
+    this.update_network();
+  }
+  toIMG(canvas: HTMLCanvasElement) {
+    let url = canvas.toDataURL();
+
+    return url;
+  }
+  func() {
+    let prog = this.visualizationContainer.nativeElement.children;
+    let target = prog[0].children[0];
+    target = target.toDataURL();
+    this.nodes[1].image = target;
     this.update_network();
   }
 }

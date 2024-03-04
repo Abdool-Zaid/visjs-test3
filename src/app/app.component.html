@@ -1,7 +1,8 @@
 <main class="main" id="bg">
   <form>
     <input type="text" name="name" id="node_name" placeholder="name" />
-    <p>selected: {{this.selectedNode}}</p><br />
+    <p>selected: {{ this.selectedNode }}</p>
+    <br />
     <hr />
     <input type="radio" id="circle" name="shape" value="circle" checked />
     <label for="circle">circle</label><br />
@@ -28,6 +29,8 @@
     <button (click)="update_node($event)">update</button>
     <button (click)="delete_node($event)">delete</button>
   </form>
+  <button (click)="func()">func</button>
   <div #visualizationContainer id="main"></div>
-  <img src="https://picsum.photos/200/300" alt="" srcset="">
+  <img src="https://picsum.photos/200/300" alt="" srcset="" />
+  <canvas #buildIMG></canvas>
 </main>
